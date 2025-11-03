@@ -1,33 +1,36 @@
-name: ci/cd
+name: cicd
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: checkout
-      uses: actions/checkout@v4
+      - name: checkout
+        uses: actions/checkout@v4
 
-    - name: setup java
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: '17'
+      - name: setup java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
 
-    - name: build
-      run: ./mvnw clean package
+      - name: tornar mvnw executavel
+        run: chmod +x mvnw
 
-    - name: test
-      run: ./mvnw test
+      - name: build
+        run: ./mvnw clean package
 
-    - name: upload jar
-      uses: actions/upload-artifact@v4
-      with:
-        name: at2-jar
-        path: target/*.jar
+      - name: test
+        run: ./mvnw test
+
+      - name: upload jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: at2-jar
+          path: target/*.jar
